@@ -1,73 +1,73 @@
-# React + TypeScript + Vite
+# Trelly — Додаток для керування завданнями (TaskList)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Простий та швидкий веб-додаток для керування та перегляду завдань, розроблений на базі **React 19**, **TypeScript** та **Vite**. Проект інтегрується з віддаленим API для отримання актуального списку завдань та їхніх деталей.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Основний функціонал
 
-## React Compiler
+- **Відображення завдань**: Отримання списку завдань із віддаленого API (`https://trelly.it-incubator.app/api/1.0/boards/tasks`).
+- **Пріоритезація за кольором**: Візуальне кодування завдань залежно від їхнього рівня пріоритету (від звичайного білого до яскраво-оранжевого).
+- **Детальний перегляд (Task Details)**: Можливість клікнути на завдання для завантаження та перегляду його детального опису, назви дошки тощо.
+- **Статус виконання**: Перегляд стану завдання (активне чи завершене) з візуальним відображенням (закреслений заголовок для завершених завдань).
+- **Скидання вибору**: Зручна кнопка для очищення виділеного завдання та повернення до початкового стану.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Стек технологій
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Фреймворк**: React 19
+- **Мова програмування**: TypeScript
+- **Збірка та розробка**: Vite
+- **Стилізація**: Vanilla CSS
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 📂 Структура проекту
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Основний код знаходиться в папці `src/`:
+- `main.tsx` — точка входу додатка, яка рендерить сторінку `MainPage`.
+- `MainPage.tsx` — головний контейнер сторінки, що об'єднує компоненти заголовка, списку завдань, деталей та футера.
+- `App.tsx` — альтернативна версія реалізації всього інтерфейсу в одному компоненті (використовується для навчання/порівняння).
+- `components/` — папка з перевикористовуваними компонентами інтерфейсу:
+  - `Header.tsx` — шапка додатка.
+  - `PageTitle.tsx` — заголовок сторінки ("Trelly").
+  - `TasksList.tsx` — компонент для запиту та відображення списку завдань.
+  - `TaskItem.tsx` — окрема картка завдання зі стилізацією пріоритету та статусу.
+  - `TaskDetails.tsx` — панель детального перегляду вибраного завдання із запитом до API.
+  - `Footer.tsx` — підвал сторінки.
+
+---
+
+## ⚙️ Інструкція із запуску
+
+### 1. Встановлення залежностей
+Переконайтеся, що у вас встановлено Node.js. Виконайте наступну команду в терміналі:
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Запуск у режимі розробки
+Для запуску локального сервера розробки виконайте:
+```bash
+npm run dev
+```
+Після цього відкрийте посилання, що з'явиться в консолі (зазвичай `http://localhost:5173`).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 3. Збірка для продакшену
+Щоб зібрати оптимізовану версію проекту для розгортання:
+```bash
+npm run build
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 4. Попередній перегляд збірки
+Для запуску локального сервера, який відобразить зібраний проект:
+```bash
+npm run preview
+```
+
+### 5. Перевірка коду (Лінтер)
+Для запуску перевірки коду за допомогою ESLint:
+```bash
+npm run lint
 ```
