@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { getTrack } from '../dal/api';
 
 type TaskDetailsData = {
   id: string;
@@ -22,21 +23,9 @@ export function TaskDetails({ selectedTaskId, boardId }: Props) {
 
     let cancelled = false;
 
-    fetch(
-      `https://trelly.it-incubator.app/api/1.0/boards/${boardId}/tasks/${selectedTaskId}`,
-      {
-        headers: {
-          'api-key': '75f7f7c7-61ad-44af-8de5-fb6f0f1975ab',
-        },
-      }
-    )
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`);
-        }
-        return res.json();
-      })
-      .then(data => {
+    const promise = getTrack(boardId, selectedTaskId)
+   
+    promise.then(data => {
         if (!cancelled) {
           setSelectedTask(data.data);
         }
@@ -48,9 +37,9 @@ export function TaskDetails({ selectedTaskId, boardId }: Props) {
         }
       });
 
-    return () => {
-      cancelled = true;
-    };
+      return () => {
+        cancelled = true;
+      };
   }, [selectedTaskId, boardId]);
 
   const visibleTask =

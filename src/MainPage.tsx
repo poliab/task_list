@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Footer } from './components/Footer';
-import { Header } from './components/Header';
-import { PageTitle } from './components/PageTitle';
-import { TaskDetails } from './components/TaskDetails';
-import { TasksList } from './components/TasksList';
+import { Footer } from './ui/Footer';
+import { Header } from './ui/Header';
+import { PageTitle } from './ui/PageTitle';
+import { TaskDetails } from './ui/TaskDetails';
+import { TasksList } from './ui/TasksList';
 
 export function MainPage() {
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
