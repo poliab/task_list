@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
-import TaskItem from './TaskItem';
+import TaskItem, { type GlobalTaskListItemJsonApiData } from './TaskItem';
 
-export function TasksList(props) {
-	const [tasks, setTasks] = useState(null);
+type Props = {
+	selectedTaskId: string | null;
+	onTaskSelected: (id: string | null) => void
+}
+
+export function TasksList({selectedTaskId, onTaskSelected}: Props) {
+	const [tasks, setTasks] = useState<Array<GlobalTaskListItemJsonApiData> | null>(null);
 
 	useEffect(() => {
 		fetch('https://trelly.it-incubator.app/api/1.0/boards/tasks', {
@@ -24,15 +29,19 @@ export function TasksList(props) {
 		return (<div>Завдань немає</div>)
 	}
 
+	const handleResetClick = () => {
+		onTaskSelected?.(null)
+	}
+
 	return <div>
-		<button onClick={() => props.onTaskSelected?.(null)}>reset</button>
+		<button onClick={handleResetClick}>reset</button>
         {tasks.map((task) => {
             return ( 
 				<TaskItem
 					key={task.id}
 					task={task}
-					isSelected={task.id === props.selectedTaskId}
-            		onTaskSelected={props.onTaskSelected}
+					isSelected={task.id === selectedTaskId}
+            		onTaskSelected={onTaskSelected}
 				/>
             )}
         )}

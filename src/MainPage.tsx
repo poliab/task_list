@@ -6,8 +6,13 @@ import { TaskDetails } from './components/TaskDetails';
 import { TasksList } from './components/TasksList';
 
 export function MainPage() {
-  const [selectedTaskId, setSelectedTaskId] = useState(null)
-  const [boardId, setBoardId] = useState(null)
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
+  const [boardId, setBoardId] = useState<string | null>(null)
+
+  const handleTaskSelect = (taskId: string | null): void => {
+    setSelectedTaskId(taskId)
+    setBoardId(taskId)
+  }
 
   return (
     <div>
@@ -16,10 +21,7 @@ export function MainPage() {
       <div style={{ display: "flex", gap: "30px" }}>
         <TasksList
           selectedTaskId={selectedTaskId}
-          onTaskSelected={(taskId) => {
-          setSelectedTaskId(taskId)
-          setBoardId(taskId)
-        }}
+          onTaskSelected={handleTaskSelect}
         />
         <TaskDetails selectedTaskId={selectedTaskId} boardId={boardId} />
       </div>

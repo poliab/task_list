@@ -1,5 +1,22 @@
+type GlobalTaskListItemDto = {
+	title: string | null;
+	status: number;
+	priority: number;
+	addedAt: string
+}
 
-function TaskItem(props) {
+export type GlobalTaskListItemJsonApiData = {
+	id: string;
+	attributes: GlobalTaskListItemDto
+}
+
+type Props = {
+	task: GlobalTaskListItemJsonApiData;
+	isSelected: boolean;
+	onTaskSelected: (id: string) => void
+}
+
+function TaskItem({task, isSelected, onTaskSelected}: Props) {
 
 	const colors = (priority: number): string => {
 		switch (priority) {
@@ -13,33 +30,33 @@ function TaskItem(props) {
 	}
 	
 	return(
-	<div key={props.task.id} style={{ display: 'flex', gap: '50px'}}>
+	<div key={task.id} style={{ display: 'flex', gap: '50px'}}>
 		<div
 			style={{
-			backgroundColor: colors(props.task.attributes.priority),
+			backgroundColor: colors(task.attributes.priority),
 			padding: '15px 15px',
 			margin: '10px',
-			border: props.isSelected ? '3px solid blue' : '1px solid black'
+			border: isSelected ? '3px solid blue' : '1px solid black'
 			}}
 			onClick={() => {
 				return (
-					props.onTaskSelected?.(props.task.id)
+					onTaskSelected?.(task.id)
 				)
 			}}
 		> 
 			
-			<h5>Заголовок: <span style={{ textDecoration: props.task.attributes.status === 2 ? 'line-through' : 'none' }}>{props.task.attributes.title}</span> </h5>
+			<h5>Заголовок: <span style={{ textDecoration: task.attributes.status === 2 ? 'line-through' : 'none' }}>{task.attributes.title}</span> </h5>
 			
 			<form>
 			<label htmlFor='isChecked'>статус </label>
 			<input
 				id='isChecked'
 				type='checkbox'
-				defaultChecked={props.task.attributes.status === 2}></input>
+				defaultChecked={task.attributes.status === 2}></input>
 			</form>
 			
 			<p>
-			<b>дата створення завдання</b>: {new Date(props.task.attributes.addedAt).toLocaleDateString()}
+			<b>дата створення завдання</b>: {new Date(task.attributes.addedAt).toLocaleDateString()}
 			</p>
 		</div>
     </div>)
