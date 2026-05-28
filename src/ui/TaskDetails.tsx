@@ -1,14 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getTrack } from '../dal/api';
-
-type TaskDetailsData = {
-  id: string;
-  attributes: {
-    title: string | null;
-    boardTitle: string;
-    description: string;
-  };
-};
+import { getTask, type TaskDetailsData } from '../dal/api';
 
 type Props = {
   selectedTaskId: string | null;
@@ -22,25 +13,24 @@ export function TaskDetails({ selectedTaskId, boardId }: Props) {
     if (!selectedTaskId || !boardId) return;
 
     let cancelled = false;
-
-    const promise = getTrack(boardId, selectedTaskId)
    
-    promise.then(data => {
+    getTask(boardId, selectedTaskId)
+      .then(data => {
         if (!cancelled) {
-          setSelectedTask(data.data);
+        setSelectedTask(data.data);
         }
       })
       .catch(err => {
         console.error(err);
         if (!cancelled) {
-          setSelectedTask(null);
+        setSelectedTask(null);
         }
       });
 
-      return () => {
-        cancelled = true;
-      };
-  }, [selectedTaskId, boardId]);
+  return () => {
+    cancelled = true;
+  };
+}, [selectedTaskId, boardId]);
 
   const visibleTask =
     selectedTaskId && selectedTask?.id === selectedTaskId
