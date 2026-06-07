@@ -1,40 +1,17 @@
-import { useEffect, useState } from 'react';
-import { getTask, type TaskDetailsData } from '../dal/api';
+import { useTaskDetails } from '../bll/useTaskDetails';
 
 type Props = {
   selectedTaskId: string | null;
   boardId: string | null;
 };
 
-export function TaskDetails({ selectedTaskId, boardId }: Props) {
-  const [selectedTask, setSelectedTask] = useState<TaskDetailsData | null>(null);
-
-  useEffect(() => {
-    if (!selectedTaskId || !boardId) return;
-
-    let cancelled = false;
-   
-    getTask(boardId, selectedTaskId)
-      .then(data => {
-        if (!cancelled) {
-        setSelectedTask(data.data);
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        if (!cancelled) {
-        setSelectedTask(null);
-        }
-      });
-
-  return () => {
-    cancelled = true;
-  };
-}, [selectedTaskId, boardId]);
+export function TaskDetails(props: Props) {
+  const { selectedTaskId, boardId } = props;
+  const { taskDetails } = useTaskDetails(selectedTaskId, boardId)
 
   const visibleTask =
-    selectedTaskId && selectedTask?.id === selectedTaskId
-      ? selectedTask
+    selectedTaskId && taskDetails?.id === selectedTaskId
+      ? taskDetails
       : null;
 
   return (

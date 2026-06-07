@@ -1,14 +1,13 @@
-import { useState } from 'react';
 import { Footer } from './ui/Footer';
 import { Header } from './ui/Header';
 import { PageTitle } from './ui/PageTitle';
 import { TaskDetails } from './ui/TaskDetails';
 import { TasksList } from './ui/TasksList';
+import { useTaskSelection } from './bll/useTaskSelection';
 
 export function MainPage() {
-  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
-  const [boardId, setBoardId] = useState<string | null>(null)
-
+  const {selectedTaskId, setSelectedTaskId, boardId, setBoardId} = useTaskSelection()
+  
   const handleTaskSelect = (taskId: string | null): void => {
     setSelectedTaskId(taskId)
     setBoardId(taskId)

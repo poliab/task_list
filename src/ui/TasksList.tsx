@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
 import TaskItem from './TaskItem';
-import { getTasks, type GlobalTaskListItemJsonApiData } from '../dal/api';
+import { useTasks } from '../bll/useTasks';
 
 type Props = {
 	selectedTaskId: string | null;
@@ -8,14 +7,8 @@ type Props = {
 }
 
 export function TasksList({selectedTaskId, onTaskSelected}: Props) {
-	const [tasks, setTasks] = useState<Array<GlobalTaskListItemJsonApiData> | null>(null);
-
-	useEffect(() => {
-		getTasks()
-		.then(data => setTasks(data.data))
-		.catch(e => console.error(e));
-	}, [])
-
+	const { tasks } = useTasks()
+	
 	if (tasks === null) {
 		return (<div>Завантаження...</div>)
 	}
