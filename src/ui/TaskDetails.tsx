@@ -1,4 +1,5 @@
 import { useTaskDetails } from '../bll/useTaskDetails';
+import styles from './TaskDetails.module.css'
 
 type Props = {
   selectedTaskId: string | null;
@@ -15,7 +16,7 @@ export function TaskDetails(props: Props) {
       : null;
 
   return (
-    <div style={{ border: '1px solid', padding: '25px', minWidth: '300px' }}>
+    <div className={styles.task}>
       <h5>Task details</h5>
 
       {!selectedTaskId && <p>Task is not selected</p>}

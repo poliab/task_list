@@ -4,6 +4,7 @@ import { PageTitle } from './ui/PageTitle';
 import { TaskDetails } from './ui/TaskDetails';
 import { TasksList } from './ui/TasksList';
 import { useTaskSelection } from './bll/useTaskSelection';
+import styles from './MainPage.module.css'
 
 export function MainPage() {
   const {selectedTaskId, setSelectedTaskId, boardId, setBoardId} = useTaskSelection()
@@ -17,7 +18,7 @@ export function MainPage() {
     <div>
       <Header />
       <PageTitle />
-      <div style={{ display: "flex", gap: "30px" }}>
+      <div className={styles.container}>
         <TasksList
           selectedTaskId={selectedTaskId}
           onTaskSelected={handleTaskSelect}
